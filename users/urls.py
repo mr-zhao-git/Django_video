@@ -18,9 +18,10 @@ from django.contrib import admin
 from django.template.backends.django import Template
 from django.urls import path
 from django.views.generic import TemplateView
-from .views import check_username
+from . import views
 
 urlpatterns = [
     path('register/', TemplateView.as_view(template_name='register.html')),
-    path('check_username/', check_username),  # 通过ajax发送请求，不需要写url地址
+    path('check_username/', views.check_username),  # 通过ajax发送请求，不需要写url地址
+    path('generate_code/', views.generate_code),
 ]
