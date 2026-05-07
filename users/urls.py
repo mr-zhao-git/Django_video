@@ -25,4 +25,5 @@ urlpatterns = [
     path('check_username/', views.check_username),  # 通过ajax发送请求，不需要写url地址
     path('generate_code/', views.generate_code),
     path('verify_code/', views.verify_code),
+    path('submit_register/', views.submit_register),
 ]

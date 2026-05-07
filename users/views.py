@@ -99,3 +99,19 @@ def verify_code(request):
         # 客户端的验证码写错了
         result_data['valid'] = False
     return JsonResponse(result_data)
+
+
+@require_http_methods(['POST'])
+def submit_register(request):
+    """注册提交"""
+    # 下麦代码不合理，会把密码以明文的方式存放到数据库表中
+    # UserModel.objects.create()
+    user = UserModel.objects.create_user(username=request.POST['username'],
+                                         password=request.POST['password'],
+                                         email=request.POST['email'],
+                                         phone=request.POST['phone'])
+    user.phone = request.POST['phone']
+    user.sex = request.POST['sex']
+    user.save()
+    result_data = {'code': 200}
+    return JsonResponse(result_data)
