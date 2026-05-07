@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <link rel="icon" href="/static/images/favicons/favicon-32x32.png" sizes="32x32" type="image/png">
+    <link rel="icon" href="/static/images/favicons/favicon-16x16.png" sizes="16x16" type="image/png">
+    <link rel="stylesheet" href="/static/lib/bootstrap-icons/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/bootstrap-admin.min.css">
+    <title>backtype-video平台-登录</title>
+</head>
+<body>
+
+<div class="min-vh-100 d-flex justify-content-center align-items-center py-3">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 col-sm-8 col-lg-6 col-xl-4 mx-auto">
+                <div class="card shadow border-0 bg-white">
+                    <div class="card-header bg-white border-bottom p-4 text-center">
+                        <a href="#" class="fs-4 text-dark text-decoration-none">
+                            用户登录
+                        </a>
+                    </div>
+                    <div class="card-body">
+                        <form id="form" class="form" action="/users/submit_login/" method="post">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label for="username" class="form-label">账号</label>
+                                <input type="text" class="form-control" id="username" name="username"
+                                       placeholder="邮箱/用户名/手机号">
+                            </div>
+                            <div class="mb-3">
+                                <label for="password" class="form-label">密码</label>
+                                <input type="password" class="form-control" id="password" name="password"
+                                       placeholder="请输入密码">
+                            </div>
+
+                            <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="exampleCheck1" name="remember"
+                                           value="10">
+                                    <label class="form-check-label" for="exampleCheck1">十天内免登录</label>
+                                </div>
+                                <button id="login-btn" type="submit" class="btn btn-primary">立即登录</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="card-footer bg-white">
+                        <div class="text-center p-2 text-muted">
+                            Copyright © 2026 mr.zhao.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

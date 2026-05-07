@@ -3,6 +3,8 @@ from http.client import HTTPResponse
 from io import BytesIO
 
 from PIL import Image, ImageDraw, ImageFont
+from django.contrib import auth
+from django.contrib.auth.password_validation import password_changed
 from django.db.models.expressions import result
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render
@@ -115,3 +117,19 @@ def submit_register(request):
     user.save()
     result_data = {'code': 200}
     return JsonResponse(result_data)
+
+
+@require_http_methods(['POST'])
+def submit_login(request):
+    """登陆"""
+    day = int(request.POST.get('remember', '1'))
+    # 用户认证的函数
+    user = auth.authenticate(
+        request,
+        username=request.POST.get('username'),
+        password=request.POST.get('password')
+    )
+    if user:  # 用户登陆成功
+        auth.login(request, user)  # 把用户的信息存到session中了
+        request.session.set_expiry(day * 24 * 60 * 60)
+    return HttpResponse('登陆成功')
