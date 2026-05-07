@@ -69,6 +69,14 @@ def generate_code(request):
               fill=(random.randrange(0, 255), random.randrange(0, 255), random.randrange(0, 255)))
     # 释放画笔
     del draw
+    """
+        1、session在服务器端，cookie在客户端（浏览器）
+        2、session默认被存在服务器的一个数据库（不是内存）
+        3、session的运行依赖 session id，而 session id 是存在cookie中的
+        4、session可以放在 文件，数据库或内存中都可以
+        5、用户验证这种场合一般会用session
+    """
+    # 将图形验证码存储到session
     request.session['verify_code'] = rand_str
     # 内存文件操作
     buf = BytesIO()
@@ -76,3 +84,18 @@ def generate_code(request):
     im.save(buf, 'png')
     # 将内存中的图片数据返回给客户端 MIME类型为图片png
     return HttpResponse(buf.getvalue(), 'image/png')
+
+
+@require_http_methods(['POST'])
+def verify_code(request):
+    """验证验证码是否正确"""
+    # {'valid': True}:如果返回的是True，表示验证合法，通过
+    # {'valid': False}:如果返回的是False，表示验证不合法，不通过
+    result_data = {'valid': True}  # 先定义一个默认的返回参数
+    code = request.POST.get('captcha')  # 接收请求参数
+    # 服务器里前在前一次请求的时候就已经存放了验证码：在session中
+    code2 = request.session['verify_code']
+    if not code == code2:
+        # 客户端的验证码写错了
+        result_data['valid'] = False
+    return JsonResponse(result_data)
