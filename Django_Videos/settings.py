@@ -125,6 +125,12 @@ STATICFILES_DIRS = [
     BASE_DIR / 'static',  # 静态文件在哪里目录
 ]
 
+# 配置上传视频文件存放的目录
+# 设置媒体路由地址信息
+MEDIA_URL = '/media/'
+# 获取media文件夹的完整路径信息
+MEDIA_ROOT = BASE_DIR / 'media'
+
 # 打印由ORM创的SQL语句
 LOGGING = {
     'version': 1,
